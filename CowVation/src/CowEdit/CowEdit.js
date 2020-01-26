@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Picker } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import CheckBox from '@react-native-community/checkbox';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class CowEdit extends Component {
     constructor(props) {

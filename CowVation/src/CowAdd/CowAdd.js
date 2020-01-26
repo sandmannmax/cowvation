@@ -130,6 +130,7 @@ export default class CowAdd extends Component {
                 'Content-Type': 'multipart/form-data'
             }, data);
             if(response.status == 200) {
+                this.setState({error: 'Erfolgreich hinzugefügt.'})
                 return;
             } else if(response.status == 401) {
                 response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {

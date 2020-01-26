@@ -152,7 +152,7 @@ export default class Cow extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.containerSlider}>
-            <SliderBox style={styles.images} images={this.state.images}/>
+            <SliderBox images={this.state.images}/>
           </View>
           <View style={styles.content}>
             <View style={styles.containerLabel}>
@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     margin: 2,
-    backgroundColor: '#fff741',
     borderRadius: 8,
   },
   nummer: {

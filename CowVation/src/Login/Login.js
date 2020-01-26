@@ -13,7 +13,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={10}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={5}>
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={require('./../../cowvationLogoW.png')} />
         </View>

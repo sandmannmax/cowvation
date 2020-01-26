@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import ListeItem from './ListeItem'
 
 export default class Liste extends Component {
@@ -12,6 +12,7 @@ export default class Liste extends Component {
       data: [],
       canLoad: true,
       len: 0,
+      refreshing: false,
     }
   }
 
@@ -31,6 +32,7 @@ export default class Liste extends Component {
       }).then((response) => {
         if(response.status == 200) {
           response.json().then(data => {
+            this.setState({data: []})
             data.forEach(obj => {
               this.state.data.push({nummer: obj.nummer, ohrmarke: obj.ohrmarke, rasse: obj.rasse, navigation:  this.props.navigation, access: this.state.access, refresh: this.state.refresh});
             });
@@ -94,7 +96,7 @@ export default class Liste extends Component {
           <FlatList
           data={this.state.data}
           renderItem={({ item }) => <ListeItem nummer={item.nummer} ohrmarke={item.ohrmarke} rasse={item.rasse} navigation={item.navigation} access={item.access} refresh={item.refresh}/>}
-          keyExtractor={item => item.nummer.toString()}
+          keyExtractor={item => item.nummer.toString()} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.load} />}
           />      
         </View>
         <TouchableOpacity style={styles.addBtn} onPress={this.cowAdd}><Text style={{textAlign: 'center', fontSize: 30}}>+</Text></TouchableOpacity>

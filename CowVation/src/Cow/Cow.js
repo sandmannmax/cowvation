@@ -22,6 +22,7 @@ export default class Cow extends Component {
         gruppe: '',
         error: '',
         loading: true,
+        reload: false,
     }
   }
 
@@ -94,16 +95,13 @@ export default class Cow extends Component {
             gruppe: data.gruppe,
           });
           if(data.pic1 != null){
-            let uri = await this.cache(data.pic1)
-            this.state.images.push(uri)
+            this.state.images.push(await this.cache(data.pic1));
           }
           if(data.pic2 != null){
-            let uri = await this.cache(data.pic2)
-            this.state.images.push(uri)
+            this.state.images.push(await this.cache(data.pic2));
           }
           if(data.pic3 != null){
-            let uri = await this.cache(data.pic3)
-            this.state.images.push(uri)
+            this.state.images.push(await this.cache(data.pic3));
           }
         } else if(response.status == 401) {
           let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
@@ -137,7 +135,7 @@ export default class Cow extends Component {
 
   componentDidMount(){
     this.load().then(() => {
-      this.setState({loading: false})
+      setTimeout(() => {this.setState({loading: false});}, 500);
     });
   }
 

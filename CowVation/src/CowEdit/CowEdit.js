@@ -147,6 +147,15 @@ export default class CowEdit extends Component {
         }
     }
 
+    componentDidMount(){
+        if(this.state.images.length > 0) {
+            this.setState({delColor: '#000', delDisabled: false});
+        }
+        if(this.state.images.length > 2) {
+            this.setState({addColor: '#aaa', addDisabled: true});
+        }
+      }
+
     render() {
         return (
         <SafeAreaView style={styles.container}>

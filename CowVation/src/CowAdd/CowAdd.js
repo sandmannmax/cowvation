@@ -129,6 +129,21 @@ export default class CowAdd extends Component {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
+            if(response.status == 200) {
+                return;
+            } else if(response.status == 401) {
+                response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
+                    Authorization: `Bearer ${this.state.access}`,
+                    'Content-Type': 'multipart/form-data'
+                }, data);
+                if(response.status == 200) {
+                    return;
+                } else {
+                    this.setState({error: 'Ein Fehler ist aufgetreten. Bitte App neustarten.', canLoad: false});
+                }
+            } else {
+                this.setState({error: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es demnächst erneut.'})
+            }
         }
     }
 

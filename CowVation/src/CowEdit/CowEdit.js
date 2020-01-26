@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Pick
 import { SliderBox } from 'react-native-image-slider-box';
 import CheckBox from '@react-native-community/checkbox';
 import RNFetchBlob from 'react-native-fetch-blob';
-import GLOBAL from './../Global/Global'
 
 export default class CowEdit extends Component {
     constructor(props) {
@@ -130,6 +129,21 @@ export default class CowEdit extends Component {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
+            if(response.status == 200) {
+                return;
+            } else if(response.status == 401) {
+                response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/' + this.state.nummerS + '/edit/', {
+                    Authorization: `Bearer ${this.state.access}`,
+                    'Content-Type': 'multipart/form-data'
+                }, data);
+                if(response.status == 200) {
+                    return;
+                } else {
+                    this.setState({error: 'Ein Fehler ist aufgetreten. Bitte App neustarten.', canLoad: false});
+                }
+            } else {
+                this.setState({error: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es demnächst erneut.'})
+            }
         }
     }
 

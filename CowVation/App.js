@@ -1,9 +1,9 @@
-import Login from './components/Login/Login';
-import Liste from './components/Liste/Liste';
-import Cow from './components/Cow/Cow';
-import CowAdd from './components/CowAdd/CowAdd';
-import CowEdit from './components/CowEdit/CowEdit'
-import CameraComponent from './components/CameraComponent/CameraComponent';
+import Login from './src/Login/Login'
+import Liste from './src/Liste/Liste'
+import Cow from './src/Cow/Cow'
+import CowAdd from './src/CowAdd/CowAdd'
+import CowEdit from './src/CowEdit/CowEdit'
+import CameraComponent from './src/CameraComponent/CameraComponent';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
@@ -14,7 +14,7 @@ const MainNavigator = createStackNavigator({
     CowAdd: {screen: CowAdd},
     CowEdit: {screen: CowEdit},
     Camera: {screen: CameraComponent},
-  });
+});
 
 const App = createAppContainer(MainNavigator);
 

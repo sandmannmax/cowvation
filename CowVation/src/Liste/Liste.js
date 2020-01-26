@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import ListeItem from './ListeItem'
-import GLOBAL from './../Global/Global'
 
 export default class Liste extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ export default class Liste extends Component {
         method: 'GET',
         headers : {
           //'Authorization': 'Bearer ' + this.state.access,
-          'Authorization': 'Bearer ' + GLOBAL.access,
+          'Authorization': 'Bearer ' + this.state.access,
           'Content-Type': 'application/json',
         }
       }).then((response) => {

@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native
 export default class LoginForm extends Component {
 
   passwortInput;
-  global = Global(this.props.navigation.store)
 
   constructor(props) {
     super(props);

@@ -15,7 +15,7 @@ export default class Login extends Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={10}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={require('./../../../cowvationLogoW.png')} />
+          <Image style={styles.logo} source={require('./../../cowvationLogoW.png')} />
         </View>
         <View style={styles.loginContainer}>
           <LoginForm navigation={this.props.navigation}/>

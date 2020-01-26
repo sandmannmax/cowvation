@@ -129,15 +129,22 @@ export default class CowEdit extends Component {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
-            if(response.status == 200) {
+            if(response.respInfo.status == 200) {
+                this.setState({error: 'Erfolgreich bearbeitet.'})
                 return;
-            } else if(response.status == 401) {
-                response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/' + this.state.nummerS + '/edit/', {
-                    Authorization: `Bearer ${this.state.access}`,
-                    'Content-Type': 'multipart/form-data'
-                }, data);
-                if(response.status == 200) {
-                    return;
+            } else if(response.respInfo.status == 401) {
+                isNew = await this.refreshToken();
+                if (isNew) {
+                    response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/' + this.state.nummerS + '/edit/', {
+                        Authorization: `Bearer ${this.state.access}`,
+                        'Content-Type': 'multipart/form-data'
+                    }, data);
+                    if(response.respInfo.status == 200) {
+                        this.setState({error: 'Erfolgreich bearbeitet.'})
+                        return;
+                    } else {
+                        this.setState({error: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es demnächst erneut.'})
+                    }
                 } else {
                     this.setState({error: 'Ein Fehler ist aufgetreten. Bitte App neustarten.', canLoad: false});
                 }

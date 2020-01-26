@@ -22,7 +22,7 @@ export default class Cow extends Component {
         gruppe: '',
         error: '',
         loading: true,
-        reload: false,
+        sliderRefresh: false,
     }
   }
 
@@ -43,6 +43,25 @@ export default class Cow extends Component {
       return hash;
   }
 
+  cacheNew = async (sources) => {
+    let images = []
+    for (let i = 0; i < sources.length; i++) {
+      if (sources[i] != null) {
+        let uri = 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/' + sources[i];
+        let name = this.hashCode(uri);
+        let path = `file://${RNFS.CachesDirectoryPath}${name}`;
+        let image = await RNFS.exists(path);
+        if(image) {
+          images.push(path)
+        }
+        RNFS.downloadFile({fromUrl: uri, toFile: path}).promise.then(() => {
+          images.push(path)
+        });
+      }
+    }
+    return images;
+  }
+
   cache = async (source) => {
     let uri = 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/' + source;
     let name = this.hashCode(uri);
@@ -51,7 +70,7 @@ export default class Cow extends Component {
     if(image) {
       return path;
     }
-    RNFS.downloadFile({fromUrl: uri, toFile: path}).then(() => {
+    RNFS.downloadFile({fromUrl: uri, toFile: path}).promise.then(() => {
       return path;
     });
   }
@@ -94,7 +113,8 @@ export default class Cow extends Component {
             holkuh: data.holkuh,
             gruppe: data.gruppe,
           });
-          if(data.pic1 != null){
+          this.setState({images: await this.cacheNew([data.pic1, data.pic2, data.pic3])})
+          /* if(data.pic1 != null){
             this.state.images.push(await this.cache(data.pic1));
           }
           if(data.pic2 != null){
@@ -102,7 +122,7 @@ export default class Cow extends Component {
           }
           if(data.pic3 != null){
             this.state.images.push(await this.cache(data.pic3));
-          }
+          } */
         } else if(response.status == 401) {
           let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
             method: 'POST',
@@ -135,7 +155,7 @@ export default class Cow extends Component {
 
   componentDidMount(){
     this.load().then(() => {
-      setTimeout(() => {this.setState({loading: false});}, 500);
+      setTimeout(() => {this.setState({loading: false, sliderRefresh: true});}, 500);
     });
   }
 
@@ -150,7 +170,7 @@ export default class Cow extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.containerSlider}>
-            <SliderBox images={this.state.images}/>
+            <SliderBox images={this.state.images} refresh={this.state.sliderRefresh}/>
           </View>
           <View style={styles.content}>
             <View style={styles.containerLabel}>

@@ -95,6 +95,26 @@ export default class CowAdd extends Component {
         this.props.navigation.navigate('Camera', { goBackData: this.getBackData });
     }
 
+    refreshToken = async () => {
+        let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
+            method: 'POST',
+            headers : {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              refresh: this.state.refresh,
+            }),
+        });
+        if(response.status == 200) {
+            let data = await response.json();
+            this.setState({access: data.access});
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     send = async () => {
         if(this.state.nummerS == '') {
             this.setState({error: "Nummer darf nicht leer sein!"});
@@ -129,16 +149,22 @@ export default class CowAdd extends Component {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
-            if(response.status == 200) {
+            if(response.respInfo.status == 200) {
                 this.setState({error: 'Erfolgreich hinzugefügt.'})
                 return;
-            } else if(response.status == 401) {
-                response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
-                    Authorization: `Bearer ${this.state.access}`,
-                    'Content-Type': 'multipart/form-data'
-                }, data);
-                if(response.status == 200) {
-                    return;
+            } else if(response.respInfo.status == 401) {
+                isNew = await this.refreshToken();
+                if (isNew) {
+                    response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
+                        Authorization: `Bearer ${this.state.access}`,
+                        'Content-Type': 'multipart/form-data'
+                    }, data);
+                    if(response.respInfo.status == 200) {
+                        this.setState({error: 'Erfolgreich hinzugefügt.'})
+                        return;
+                    } else {
+                        this.setState({error: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es demnächst erneut.'})
+                    }
                 } else {
                     this.setState({error: 'Ein Fehler ist aufgetreten. Bitte App neustarten.', canLoad: false});
                 }

@@ -47,7 +47,7 @@ export default class Cow extends Component {
     let images = []
     for (let i = 0; i < sources.length; i++) {
       if (sources[i] != null) {
-        let uri = 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/' + sources[i];
+        let uri = 'http://18.184.103.127/' + sources[i];
         let name = this.hashCode(uri);
         let path = `file://${RNFS.CachesDirectoryPath}${name}`;
         let image = await RNFS.exists(path);
@@ -63,7 +63,7 @@ export default class Cow extends Component {
   }
 
   cache = async (source) => {
-    let uri = 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/' + source;
+    let uri = 'http://18.184.103.127/' + source;
     let name = this.hashCode(uri);
     let path = `file://${RNFS.CachesDirectoryPath}${name}`;
     let image = await RNFS.exists(path);
@@ -94,7 +94,7 @@ export default class Cow extends Component {
   load = async () => {
     if(this.state.canLoad){
       try {
-        let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/' + this.state.nummer.toString() + '/', {
+        let response = await fetch('http://18.184.103.127/api/cow/' + this.state.nummer.toString() + '/', {
           method: 'GET',
           headers : {
             'Authorization': 'Bearer ' + this.state.access,
@@ -124,7 +124,7 @@ export default class Cow extends Component {
             this.state.images.push(await this.cache(data.pic3));
           } */
         } else if(response.status == 401) {
-          let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
+          let response = await fetch('http://18.184.103.127/token/refresh/', {
             method: 'POST',
             headers : {
               Accept: 'application/json',

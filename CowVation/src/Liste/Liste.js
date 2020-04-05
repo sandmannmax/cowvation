@@ -22,7 +22,7 @@ export default class Liste extends Component {
 
   load = () => {
     if(this.state.canLoad){
-      fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
+      fetch('http://18.184.103.127/api/cow/', {
         method: 'GET',
         headers : {
           //'Authorization': 'Bearer ' + this.state.access,
@@ -38,7 +38,7 @@ export default class Liste extends Component {
             });
           });
         } else if(response.status == 401) {
-          fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
+          fetch('http://18.184.103.127/token/refresh/', {
             method: 'POST',
             headers : {
               Accept: 'application/json',

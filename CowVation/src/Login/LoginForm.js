@@ -30,7 +30,7 @@ export default class LoginForm extends Component {
       this.setState({error: 'Sie müssen einen Namen und ein Passwort eingeben.'});
       return;
     }
-    fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/', {
+    fetch('http://18.184.103.127/token/', {
       method: 'POST',
       headers : {
         Accept: 'application/json',

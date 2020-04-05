@@ -96,7 +96,7 @@ export default class CowAdd extends Component {
     }
 
     refreshToken = async () => {
-        let response = await fetch('http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/token/refresh/', {
+        let response = await fetch('http://18.184.103.127/token/refresh/', {
             method: 'POST',
             headers : {
               Accept: 'application/json',
@@ -145,7 +145,7 @@ export default class CowAdd extends Component {
             for(let i = 0; i < this.state.images.length; i++) {
                 data.push({ name: ('pic' + (i+1).toString()), filename: (this.state.nummerS + '_pic' + (i+1).toString() + '.jpg'), type: 'image/jpeg', data: RNFetchBlob.wrap(this.state.images[i].slice(7)) });
             }
-            let response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
+            let response = await RNFetchBlob.fetch('POST', 'http://18.184.103.127/api/cow/', {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
@@ -155,7 +155,7 @@ export default class CowAdd extends Component {
             } else if(response.respInfo.status == 401) {
                 isNew = await this.refreshToken();
                 if (isNew) {
-                    response = await RNFetchBlob.fetch('POST', 'http://cowvation.62defd4pih.eu-central-1.elasticbeanstalk.com/api/cow/', {
+                    response = await RNFetchBlob.fetch('POST', 'http://18.184.103.127/api/cow/', {
                         Authorization: `Bearer ${this.state.access}`,
                         'Content-Type': 'multipart/form-data'
                     }, data);

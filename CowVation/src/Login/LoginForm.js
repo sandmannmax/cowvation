@@ -30,7 +30,7 @@ export default class LoginForm extends Component {
       this.setState({error: 'Sie müssen einen Namen und ein Passwort eingeben.'});
       return;
     }
-    fetch('http://18.184.103.127/token/', {
+    fetch('https://cvapi.xandmedia.de/token/', {
       method: 'POST',
       headers : {
         Accept: 'application/json',
@@ -58,7 +58,7 @@ export default class LoginForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput 
+        <TextInput
           style={styles.input}
           placeholder={'benutzername'}
           placeholderTextColor='rgba(255,255,255,0.6)'
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    backgroundColor: '#80d4ff', 
-    color: '#fff',   
+    backgroundColor: '#80d4ff',
+    color: '#fff',
     width: 350,
     marginBottom: 10,
     paddingTop: 5,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   error: {
-    color: '#b30000', 
+    color: '#b30000',
     textAlign: 'center',
     marginTop: 10,
   },

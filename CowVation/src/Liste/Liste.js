@@ -22,7 +22,7 @@ export default class Liste extends Component {
 
   load = () => {
     if(this.state.canLoad){
-      fetch('http://18.184.103.127/api/cow/', {
+      fetch('https://cvapi.xandmedia.de/kuh/1/', {
         method: 'GET',
         headers : {
           //'Authorization': 'Bearer ' + this.state.access,
@@ -34,11 +34,11 @@ export default class Liste extends Component {
           response.json().then(data => {
             this.setState({data: []})
             data.forEach(obj => {
-              this.state.data.push({nummer: obj.nummer, ohrmarke: obj.ohrmarke, rasse: obj.rasse, navigation:  this.props.navigation, access: this.state.access, refresh: this.state.refresh});
+              this.state.data.push({nummer: obj.number, ohrmarke: obj.number_ear, rasse: obj.race, navigation:  this.props.navigation, access: this.state.access, refresh: this.state.refresh});
             });
           });
         } else if(response.status == 401) {
-          fetch('http://18.184.103.127/token/refresh/', {
+          fetch('https://cvapi.xandmedia.de/token/refresh/', {
             method: 'POST',
             headers : {
               Accept: 'application/json',
@@ -97,7 +97,7 @@ export default class Liste extends Component {
           data={this.state.data}
           renderItem={({ item }) => <ListeItem nummer={item.nummer} ohrmarke={item.ohrmarke} rasse={item.rasse} navigation={item.navigation} access={item.access} refresh={item.refresh}/>}
           keyExtractor={item => item.nummer.toString()} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.load} />}
-          />      
+          />
         </View>
         <TouchableOpacity style={styles.addBtn} onPress={this.cowAdd}><Text style={{textAlign: 'center', fontSize: 30}}>+</Text></TouchableOpacity>
       </View>

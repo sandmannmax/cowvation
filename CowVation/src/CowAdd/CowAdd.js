@@ -27,7 +27,7 @@ export default class CowAdd extends Component {
             addDisabled: false,
             delDisabled: true,
         }
-        
+
         this.handleNummer = this.handleNummer.bind(this);
         this.handleOhrmarke = this.handleOhrmarke.bind(this);
         this.handleRasse = this.handleRasse.bind(this);
@@ -145,7 +145,7 @@ export default class CowAdd extends Component {
             for(let i = 0; i < this.state.images.length; i++) {
                 data.push({ name: ('pic' + (i+1).toString()), filename: (this.state.nummerS + '_pic' + (i+1).toString() + '.jpg'), type: 'image/jpeg', data: RNFetchBlob.wrap(this.state.images[i].slice(7)) });
             }
-            let response = await RNFetchBlob.fetch('POST', 'http://18.184.103.127/api/cow/', {
+            let response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/api/cow/', {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
@@ -155,7 +155,7 @@ export default class CowAdd extends Component {
             } else if(response.respInfo.status == 401) {
                 isNew = await this.refreshToken();
                 if (isNew) {
-                    response = await RNFetchBlob.fetch('POST', 'http://18.184.103.127/api/cow/', {
+                    response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/api/cow/', {
                         Authorization: `Bearer ${this.state.access}`,
                         'Content-Type': 'multipart/form-data'
                     }, data);
@@ -199,14 +199,14 @@ export default class CowAdd extends Component {
                     <TextInput style={[styles.input, styles.groesse]} value={this.state.groesse} onChangeText={text => this.setState({groesse: text})}></TextInput>
                     <CheckBox style={[styles.input, styles.holkuh]} value={this.state.holkuh} onValueChange={value => this.setState({holkuh: value})}></CheckBox>
                     <CheckBox style={[styles.input, styles.handkuh]} value={this.state.handkuh} onValueChange={value => this.setState({handkuh: value})}></CheckBox>
-                    <Picker style={[styles.input, styles.gruppe]} selectedValue={this.state.gruppe} onValueChange={(itemValue, itemIndex) => this.setState({gruppe: itemValue})}>                    
+                    <Picker style={[styles.input, styles.gruppe]} selectedValue={this.state.gruppe} onValueChange={(itemValue, itemIndex) => this.setState({gruppe: itemValue})}>
                         <Picker.Item label="Stall" value="stall" />
                         <Picker.Item label="Seperation" value="sep" />
                         <Picker.Item label="Abkalbebox" value="ak" />
                         <Picker.Item label="Trockengestellt" value="trock" />
                     </Picker>
                 </View>
-            </View>    
+            </View>
             <View style={styles.imgContainer}>
                 <TouchableOpacity onPress={this.navCamera} disabled={this.state.addDisabled} style={styles.btn}>
                         <Text style={[styles.btnText, {color: this.state.addColor}]}>Bild hinzufügen</Text>
@@ -217,7 +217,7 @@ export default class CowAdd extends Component {
                 <TouchableOpacity onPress={this.send} style={styles.btn}>
                         <Text style={[styles.btnText]}>Hochladen</Text>
                 </TouchableOpacity>
-            </View> 
+            </View>
             <Text style={[styles.errorText]}>{this.state.error}</Text>
         </SafeAreaView>
         );
@@ -225,9 +225,9 @@ export default class CowAdd extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: { 
+    container: {
     },
-    containerSlider: { 
+    containerSlider: {
         height: 200,
     },
     content: {
@@ -286,12 +286,12 @@ const styles = StyleSheet.create({
         marginVertical: 3,
     },
     btnText: {
-        fontSize: 14, 
+        fontSize: 14,
         textAlign: 'center',
     },
     errorText: {
         textAlign: 'center',
-        fontSize: 12, 
+        fontSize: 12,
         color: '#f85',
     },
 });

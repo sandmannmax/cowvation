@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
-export default class CameraComponent extends Component {    
+export default class CameraComponent extends Component {
     camera;
-        
+
     static navigationOptions = {
         header: () => false,
     }
@@ -43,7 +43,7 @@ export default class CameraComponent extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
       paddingTop: 24,
   },
   btnContainer: {

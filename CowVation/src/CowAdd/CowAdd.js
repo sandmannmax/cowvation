@@ -96,7 +96,7 @@ export default class CowAdd extends Component {
     }
 
     refreshToken = async () => {
-        let response = await fetch('http://18.184.103.127/token/refresh/', {
+        let response = await fetch('https://cvapi.xandmedia.de/token/refresh/', {
             method: 'POST',
             headers : {
               Accept: 'application/json',
@@ -133,19 +133,20 @@ export default class CowAdd extends Component {
         } else {
             this.setState({error: "Alle Angaben sind richtig"});
             let data = [
-                { name: 'nummer', data: this.state.nummerS},
-                { name: 'ohrmarke', data: this.state.ohrmarkeS},
-                { name: 'rasse', data: this.state.rasse},
-                { name: 'farbtendenz', data: this.state.farbtendenz},
-                { name: 'groesse', data: this.state.groesse},
-                { name: 'holkuh', data: this.state.holkuh ? 'True':'False'},
-                { name: 'handkuh', data: this.state.handkuh ? 'True':'False'},
-                { name: 'gruppe', data: this.state.gruppe},
+                { name: 'number', data: this.state.nummerS},
+                { name: 'number_ear', data: this.state.ohrmarkeS},
+                { name: 'agrop', data: "1"},
+                { name: 'race', data: this.state.rasse},
+                { name: 'color_tendency', data: this.state.farbtendenz},
+                { name: 'height', data: this.state.groesse},
+                { name: 'fetch', data: this.state.holkuh ? 'True':'False'},
+                { name: 'manual', data: this.state.handkuh ? 'True':'False'},
+                { name: 'group', data: this.state.gruppe},
             ]
             for(let i = 0; i < this.state.images.length; i++) {
-                data.push({ name: ('pic' + (i+1).toString()), filename: (this.state.nummerS + '_pic' + (i+1).toString() + '.jpg'), type: 'image/jpeg', data: RNFetchBlob.wrap(this.state.images[i].slice(7)) });
+                data.push({ name: ('image_' + ((i+1) == 1 ? 'one' : (i+1) == 2 ? 'two' : 'three')), filename: (this.state.nummerS + '_image' + ((i+1) == 1 ? 'one' : (i+1) == 2 ? 'two' : 'three') + '.jpg'), type: 'image/jpeg', data: RNFetchBlob.wrap(this.state.images[i].slice(7)) });
             }
-            let response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/api/cow/', {
+            let response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/kuh/1/hinzufuegen/', {
                 Authorization: `Bearer ${this.state.access}`,
                 'Content-Type': 'multipart/form-data'
             }, data);
@@ -155,7 +156,7 @@ export default class CowAdd extends Component {
             } else if(response.respInfo.status == 401) {
                 isNew = await this.refreshToken();
                 if (isNew) {
-                    response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/api/cow/', {
+                    response = await RNFetchBlob.fetch('POST', 'https://cvapi.xandmedia.de/kuh/1/hinzufuegen/', {
                         Authorization: `Bearer ${this.state.access}`,
                         'Content-Type': 'multipart/form-data'
                     }, data);

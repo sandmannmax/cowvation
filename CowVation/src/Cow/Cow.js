@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import * as RNFS from 'react-native-fs';
-import Icon from 'react-native-vector-icons/EvilIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Cow extends Component {
   constructor(props) {
@@ -94,7 +94,7 @@ export default class Cow extends Component {
   load = async () => {
     if(this.state.canLoad){
       try {
-        let response = await fetch('https://cvapi.xandmedia.de/api/cow/' + this.state.nummer.toString() + '/', {
+        let response = await fetch('https://cvapi.xandmedia.de/kuh/1/' + this.state.nummer.toString() + '/', {
           method: 'GET',
           headers : {
             'Authorization': 'Bearer ' + this.state.access,
@@ -103,17 +103,18 @@ export default class Cow extends Component {
         });
         if(response.status == 200) {
           let data = await response.json();
+          console.log(data);
           this.setState({
-            nummer: data.nummer,
-            ohrmarke: data.ohrmarke,
-            rasse: data.rasse,
-            farbtendenz: data.farbtendenz,
-            groesse: data.groesse,
-            handkuh: data.handkuh,
-            holkuh: data.holkuh,
-            gruppe: data.gruppe,
+            nummer: data.number,
+            ohrmarke: data.number_ear,
+            rasse: data.race,
+            farbtendenz: data.color_tendency,
+            groesse: data.height,
+            handkuh: data.manual,
+            holkuh: data.fetch,
+            gruppe: data.group,
           });
-          this.setState({images: await this.cacheNew([data.pic1, data.pic2, data.pic3])})
+          this.setState({images: await this.cacheNew([data.image_one, data.image_two, data.image_three])})
           /* if(data.pic1 != null){
             this.state.images.push(await this.cache(data.pic1));
           }
@@ -196,7 +197,7 @@ export default class Cow extends Component {
           </View>
           <View>
             <TouchableOpacity onPress={this.edit} style={styles.penBtn}>
-              <Icon name="pencil" size={40} color="#555"/>
+              <Icon name="pencil" size={30} color="#555" style={styles.penIcon}/>
             </TouchableOpacity>
           </View>
         </View>

@@ -1,4 +1,11 @@
 import 'package:cowvation/core/network/network_info.dart';
+import 'package:cowvation/features/cow/data/datasources/cow_api_service.dart';
+import 'package:cowvation/features/cow/data/datasources/cow_local_data_source.dart';
+import 'package:cowvation/features/cow/data/datasources/cow_remote_data_source.dart';
+import 'package:cowvation/features/cow/data/repositories/cow_repository_impl.dart';
+import 'package:cowvation/features/cow/domain/repositories/cow_repository.dart';
+import 'package:cowvation/features/cow/domain/usecases/get_cow.dart';
+import 'package:cowvation/features/cow/presentation/bloc/cow_bloc.dart';
 import 'package:cowvation/features/cowlist/data/datasources/cow_list_api_service.dart';
 import 'package:cowvation/features/cowlist/domain/usecases/get_cow_list.dart';
 import 'package:cowvation/features/cowlist/presentation/bloc/cow_list_bloc.dart';
@@ -63,6 +70,27 @@ Future<void> init() async {
   sl.registerLazySingleton<CowListLocalDataSource>(() => CowListLocalDataSourceImpl(sharedPreferences: sl()));
   sl.registerLazySingleton<CowListRemoteDataSource>(() => CowListRemoteDataSourceImpl(client: sl()));
   sl.registerLazySingleton<CowListApiService>(() => CowListApiService.create());
+
+  //! Features - Cow
+  // Bloc
+  sl.registerFactory(() => CowBloc(getCow: sl()));
+
+  // Use Case
+  sl.registerLazySingleton(() => GetCow(sl()));
+
+  // Repository
+  sl.registerLazySingleton<CowRepository>(
+    () => CowRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
+    )
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<CowLocalDataSource>(() => CowLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerLazySingleton<CowRemoteDataSource>(() => CowRemoteDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<CowApiService>(() => CowApiService.create());
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));

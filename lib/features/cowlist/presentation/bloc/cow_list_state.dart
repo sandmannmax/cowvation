@@ -5,8 +5,6 @@ abstract class CowListState extends Equatable {
   CowListState([List props = const <dynamic>[]]) : super(props);
 }
 
-class Empty extends CowListState {}
-
 class Loading extends CowListState {}
 
 class Loaded extends CowListState {

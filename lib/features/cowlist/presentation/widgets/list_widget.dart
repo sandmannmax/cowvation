@@ -1,3 +1,4 @@
+import 'package:cowvation/features/cow/presentation/pages/cow_page.dart';
 import 'package:cowvation/features/cowlist/domain/entities/cow.dart';
 import 'package:cowvation/features/login/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _ListWidgetState extends State<ListWidget> {
       widgetList.add(
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CowPage(cowNumber: item.number,)));
           },
           child: Row(
             children: <Widget>[

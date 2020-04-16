@@ -1,8 +1,6 @@
-import 'package:cowvation/features/cowlist/presentation/bloc/cow_list_bloc.dart';
 import 'package:cowvation/features/cowlist/presentation/pages/cow_list_page.dart';
-import 'package:cowvation/features/home/message_display_widget.dart';
+import 'package:cowvation/core/widgets/message_display_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,9 +10,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    MessageDisplay(message: 'Home'),
+    Flex(
+      direction: Axis.vertical,
+      children: <Widget>[
+        MessageDisplay(
+          message: 'Home'
+        ),
+      ],
+    ),
     CowListPage(),
-    MessageDisplay(message: 'Einstellungen'),
+    Flex(
+      direction: Axis.vertical,
+      children: <Widget>[
+        MessageDisplay(
+          message: 'Einstellungen'
+        ),
+      ],
+    ),
   ];
 
   @override

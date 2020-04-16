@@ -1,6 +1,5 @@
 import 'package:cowvation/features/cow/presentation/pages/cow_page.dart';
 import 'package:cowvation/features/cowlist/domain/entities/cow.dart';
-import 'package:cowvation/features/login/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class ListWidget extends StatefulWidget {

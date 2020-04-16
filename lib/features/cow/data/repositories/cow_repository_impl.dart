@@ -1,6 +1,7 @@
 import 'package:cowvation/core/error/exceptions.dart';
 import 'package:cowvation/core/error/failures.dart';
 import 'package:cowvation/core/network/network_info.dart';
+import 'package:cowvation/core/token/domain/repositories/token_repository.dart';
 import 'package:cowvation/features/cow/data/datasources/cow_local_data_source.dart';
 import 'package:cowvation/features/cow/data/datasources/cow_remote_data_source.dart';
 import 'package:cowvation/features/cow/domain/entities/cow.dart';
@@ -13,16 +14,24 @@ class CowRepositoryImpl implements CowRepository {
   final CowRemoteDataSource remoteDataSource;
   final CowLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
+  final TokenRepository tokenRepository;
 
   CowRepositoryImpl({
     @required this.remoteDataSource,
     @required this.localDataSource,
     @required this.networkInfo,
+    @required this.tokenRepository,
   });
 
   @override
   Future<Either<Failure, Cow>> getCow(Params params) async {
-    String token = (await localDataSource.getToken()).access;
+    final failureOrToken = (await tokenRepository.getToken());
+    String token;
+    failureOrToken.fold(
+      (failure) => failure,
+      (t) {
+        token = t.access;
+    });
     int agrop = 1;
 
     if (await networkInfo.isConnected) {

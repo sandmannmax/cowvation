@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cowvation/core/error/exceptions.dart';
-import 'package:cowvation/features/login/data/models/token_model.dart';
+import 'package:cowvation/core/token/data/models/token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:meta/meta.dart';
 
@@ -25,7 +25,7 @@ class TokenLocalDataSourceImpl implements TokenLocalDataSource {
   Future<TokenModel> getToken() {
      final jsonString = sharedPreferences.getString(CACHED_TOKEN);
      if (jsonString != null) {
-      return Future.value(TokenModel.fromJson(json.decode(jsonString)));
+      return Future.value(TokenModel.fromJsonSaved(json.decode(jsonString)));
      } else {
        throw CacheException();
      }

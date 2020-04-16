@@ -1,4 +1,5 @@
 import 'package:cowvation/features/cow/presentation/bloc/cow_bloc.dart';
+import 'package:cowvation/features/cow/presentation/widgets/cow_widget.dart';
 import 'package:cowvation/features/cow/presentation/widgets/load_control.dart';
 import 'package:cowvation/core/widgets/loading_widget.dart';
 import 'package:cowvation/core/widgets/message_display_widget.dart';
@@ -34,7 +35,7 @@ class CowPage extends StatelessWidget {
               } else if (state is Loading) {
                 return LoadingWidget();
               } else if (state is Loaded) {
-                return MessageDisplay(message: state.cow.number.toString());
+                return CowWidget(state: state);
               }
               return MessageDisplay(message: 'else');
             },
@@ -44,4 +45,3 @@ class CowPage extends StatelessWidget {
     );
   }
 }
-

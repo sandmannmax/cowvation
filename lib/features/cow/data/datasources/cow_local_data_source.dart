@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:cowvation/core/error/exceptions.dart';
+import 'package:cowvation/core/token/data/models/token_model.dart';
 import 'package:cowvation/features/cow/data/models/cow_model.dart';
-import 'package:cowvation/features/login/data/models/token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:meta/meta.dart';
 
@@ -11,8 +11,6 @@ abstract class CowLocalDataSource {
   ///
   /// Throws [CacheException] if no cached data is present.
   Future<CowModel> getCow(int agrop, int cowNumber);
-
-  Future<TokenModel> getToken();
 
   Future<void> cacheCow(CowModel cowToCache, int agrop, int cowNumber);
 }
@@ -41,16 +39,6 @@ class CowLocalDataSourceImpl implements CowLocalDataSource {
       CACHED_COW + agrop.toString() + '_' + cowNumber.toString(),
       json.encode(cowToCache.toJson())
     );
-  }
-
-  @override
-  Future<TokenModel> getToken() {
-    final jsonString = sharedPreferences.getString(CACHED_TOKEN);
-    if (jsonString != null) {
-      return Future.value(TokenModel.fromJson(json.decode(jsonString)));
-    } else {
-      throw CacheException();
-    }
   }
 }
   

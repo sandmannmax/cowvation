@@ -1,4 +1,4 @@
-import 'package:cowvation/features/login/presentation/pages/login_page.dart';
+import 'package:cowvation/features/login/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'injection_container.dart' as di;
 import 'package:logging/logging.dart';

@@ -12,3 +12,5 @@ class ForbiddenFailure extends Failure {}
 class CacheFailure extends Failure {}
 
 class InvalidInputFailure extends Failure {}
+
+class NoNetworkFailure extends Failure {}

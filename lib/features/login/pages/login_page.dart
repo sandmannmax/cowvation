@@ -1,6 +1,6 @@
 import 'package:cowvation/features/home/home_page.dart';
-import 'package:cowvation/features/login/presentation/bloc/token_bloc.dart';
-import 'package:cowvation/features/login/presentation/widgets/login_control_widget.dart';
+import 'package:cowvation/features/login/bloc/token_bloc.dart';
+import 'package:cowvation/features/login/widgets/login_control_widget.dart';
 import 'package:cowvation/core/widgets/message_display_widget.dart';
 import 'package:cowvation/core/widgets/loading_widget.dart';
 import 'package:cowvation/injection_container.dart';

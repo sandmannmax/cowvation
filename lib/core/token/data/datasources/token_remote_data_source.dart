@@ -1,6 +1,6 @@
 import 'package:cowvation/core/error/exceptions.dart';
-import 'package:cowvation/features/login/data/datasources/token_api_service.dart';
-import 'package:cowvation/features/login/data/models/token_model.dart';
+import 'package:cowvation/core/token/data/datasources/token_api_service.dart';
+import 'package:cowvation/core/token/data/models/token_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class TokenRemoteDataSource {
@@ -8,6 +8,11 @@ abstract class TokenRemoteDataSource {
   /// 
   /// Throws a [ServerException] for all error codes
   Future<TokenModel> getToken(String username, String password);
+
+  /// Calls the https://cvapi.xandmedia.de/v2/token/refresh/ endpoint
+  /// 
+  /// Throws a [ServerException] for all error codes
+  Future<TokenModel> refreshToken(String refresh, DateTime firstFetch);
 }
 
 class TokenRemoteDataSourceImpl implements TokenRemoteDataSource {
@@ -22,7 +27,21 @@ class TokenRemoteDataSourceImpl implements TokenRemoteDataSource {
     body['password'] = password;
     final response = await client.getToken(body);
     if (response.isSuccessful){
-      return TokenModel.fromJson(response.body); 
+      return TokenModel.fromJsonNew(response.body); 
+    } else if (response.statusCode == 401) {
+      throw ForbiddenException();
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<TokenModel> refreshToken(String refresh, DateTime firstFetch) async {
+    Map<String, dynamic> body = Map<String, dynamic>();
+    body['refresh'] = refresh;
+    final response = await client.refreshToken(body);
+    if (response.isSuccessful){
+      return TokenModel.fromJsonRefresh(response.body, refresh, firstFetch); 
     } else if (response.statusCode == 401) {
       throw ForbiddenException();
     } else {

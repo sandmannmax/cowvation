@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:cowvation/core/error/failures.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:meta/meta.dart';
 import 'package:cowvation/features/cow/domain/entities/cow.dart';
 import 'package:cowvation/features/cow/domain/usecases/get_cow.dart';
@@ -35,6 +37,18 @@ class CowBloc extends Bloc<CowEvent, CowState> {
         (failure) => Error(message: _mapFailureToMessage(failure)),
         (cow) => Loaded(cow: cow)
       );
+    } else if (event is LoadImagesE) {
+      List<File> imageFiles = List<File>();
+      File file = await _getImageFile(event.cow.imageOne);
+      if (file != null)
+        imageFiles.add(file);
+      file = await _getImageFile(event.cow.imageTwo);
+      if (file != null)
+        imageFiles.add(file);
+      file = await _getImageFile(event.cow.imageThree);
+      if (file != null)
+        imageFiles.add(file);
+      yield LoadedImages(cow: event.cow, imageFiles: imageFiles);
     }
   }
 
@@ -49,5 +63,12 @@ class CowBloc extends Bloc<CowEvent, CowState> {
       default:
         return "Unexpected Error";
     }
+  }
+
+  Future<File> _getImageFile(String url) async {
+    if (url != null) {
+      return await DefaultCacheManager().getSingleFile('https://cvapi.xandmedia.de' + url);
+    }
+    return null;
   }
 }

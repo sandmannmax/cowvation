@@ -1,5 +1,6 @@
 import 'package:cowvation/features/cowlist/presentation/pages/cow_list_page.dart';
 import 'package:cowvation/core/widgets/message_display_widget.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,24 +33,24 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('CowVation - Home'),
-      ),
+      appBar: _buildAppBar(),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Home'),
+            icon: Icon(Icons.home),
+            title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.queue),
-            title: new Text('Kühe'),
+            icon: Icon(MdiIcons.cow),
+            title: Text('Kühe'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), title: Text('Einstellungen'))
+            icon: Icon(Icons.settings), 
+            title: Text('Einstellungen')
+          ),
         ],
       ),
     );
@@ -59,5 +60,42 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  AppBar _buildAppBar() {
+    switch (_currentIndex) {
+      case 0:
+        return AppBar(
+          title: Text('CowVation - Home'),
+        );
+      case 1:
+        return AppBar(
+          title: Text('CowVation - Kühe'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search, 
+                color: Colors.white
+              ), 
+              onPressed: () {}
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.add, 
+                color: Colors.white
+              ), 
+              onPressed: () {}
+            ),
+          ],
+        );
+      case 2:
+        return AppBar(
+          title: Text('CowVation - Einstellungen'),
+        );
+      default:
+        return AppBar(
+          title: Text('CowVation'),
+        );
+    }
   }
 }

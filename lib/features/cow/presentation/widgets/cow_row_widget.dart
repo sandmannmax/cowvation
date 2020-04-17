@@ -12,19 +12,28 @@ class CowRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Text(
-            this.description
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 5.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              this.description,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
           ),
-        ),
-        Expanded(
-          child: Text(
-            this.text
+          Expanded(
+            child: Text(
+              this.text,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

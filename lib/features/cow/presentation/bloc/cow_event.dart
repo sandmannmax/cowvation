@@ -9,3 +9,9 @@ class GetCowE extends CowEvent {
 
   GetCowE(this.cowNumber) : super([cowNumber]);
 }
+
+class LoadImagesE extends CowEvent {
+  final Cow cow;
+
+  LoadImagesE(this.cow) : super([cow]);
+}

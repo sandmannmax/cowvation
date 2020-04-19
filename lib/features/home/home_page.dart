@@ -1,3 +1,4 @@
+import 'package:cowvation/features/cow/presentation/pages/cow_add_page.dart';
 import 'package:cowvation/features/cowlist/presentation/pages/cow_list_page.dart';
 import 'package:cowvation/core/widgets/message_display_widget.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(MdiIcons.cow),
+            icon: ImageIcon(AssetImage('assets/cowvationLogo.png')),
             title: Text('Kühe'),
           ),
           BottomNavigationBarItem(
@@ -66,11 +67,13 @@ class _HomePageState extends State<HomePage> {
     switch (_currentIndex) {
       case 0:
         return AppBar(
-          title: Text('CowVation - Home'),
+          title: Text('Home'),
+          centerTitle: true,
         );
       case 1:
         return AppBar(
-          title: Text('CowVation - Kühe'),
+          title: Text('Kühe'),
+          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -84,17 +87,24 @@ class _HomePageState extends State<HomePage> {
                 Icons.add, 
                 color: Colors.white
               ), 
-              onPressed: () {}
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CowAddPage())
+                );
+              }
             ),
           ],
         );
       case 2:
         return AppBar(
-          title: Text('CowVation - Einstellungen'),
+          title: Text('Einstellungen'),
+          centerTitle: true,
         );
       default:
         return AppBar(
           title: Text('CowVation'),
+          centerTitle: true,
         );
     }
   }

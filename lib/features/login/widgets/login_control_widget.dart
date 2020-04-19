@@ -46,7 +46,7 @@ class _LoginControlState extends State<LoginControl> {
             child: TextFormField(
               validator: (String v) {
                 if(v.isEmpty) {
-                  return 'Geben Sie ein Passwort ein!';
+                  return 'Eingabe fehlt.';
                 }
               },
               decoration: InputDecoration(

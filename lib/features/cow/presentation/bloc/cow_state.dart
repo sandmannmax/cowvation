@@ -27,5 +27,3 @@ class Error extends CowState {
 
   Error({@required this.message}) : super([message]);
 }
-
-class Insert extends CowState {}

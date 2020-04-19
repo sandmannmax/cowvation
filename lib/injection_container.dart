@@ -7,8 +7,10 @@ import 'package:cowvation/features/cow/data/datasources/cow_local_data_source.da
 import 'package:cowvation/features/cow/data/datasources/cow_remote_data_source.dart';
 import 'package:cowvation/features/cow/data/repositories/cow_repository_impl.dart';
 import 'package:cowvation/features/cow/domain/repositories/cow_repository.dart';
+import 'package:cowvation/features/cow/domain/usecases/change_cow.dart';
 import 'package:cowvation/features/cow/domain/usecases/get_cow.dart';
 import 'package:cowvation/features/cow/presentation/bloc/cow_bloc.dart';
+import 'package:cowvation/features/cow/presentation/bloc_add/cow_add_bloc.dart';
 import 'package:cowvation/features/cowlist/data/datasources/cow_list_api_service.dart';
 import 'package:cowvation/features/cowlist/data/datasources/cow_list_local_data_source.dart';
 import 'package:cowvation/features/cowlist/data/datasources/cow_list_remote_data_source.dart';
@@ -25,6 +27,8 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import 'features/cow/domain/usecases/add_cow.dart';
 
 
 final sl = GetIt.instance;
@@ -59,9 +63,12 @@ Future<void> init() async {
   //! Features - Cow
   // Bloc
   sl.registerFactory(() => CowBloc(getCow: sl()));
+  sl.registerFactory(() => CowAddBloc(addCow: sl()));
 
   // Use Case
   sl.registerLazySingleton(() => GetCow(sl()));
+  sl.registerLazySingleton(() => ChangeCow(sl()));
+  sl.registerLazySingleton(() => AddCow(sl()));
 
   // Repository
   sl.registerLazySingleton<CowRepository>(

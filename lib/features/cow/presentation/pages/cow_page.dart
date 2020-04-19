@@ -17,7 +17,8 @@ class CowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CowVation - Kuh'),
+        title: Text('Kuh'),
+        centerTitle: true,
       ),
       body: buildBody(context),
     );
@@ -72,9 +73,6 @@ class CowPage extends StatelessWidget {
                           return Container(
                             width: MediaQuery.of(context).size.width,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300
-                            ),
                             child: Image.file(file)
                           );
                         },

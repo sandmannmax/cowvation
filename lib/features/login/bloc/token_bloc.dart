@@ -11,7 +11,7 @@ part 'token_event.dart';
 part 'token_state.dart';
 
 const String SERVER_FAILURE_MESSAGE = "Server Failure";
-const String FORBIDDEN_FAILURE_MESSAGE = "Wrong Username or Password";
+const String FORBIDDEN_FAILURE_MESSAGE = "Falscher Benutzername oder Passwort.";
 const String CACHE_FAILURE_MESSAGE = "Cache Failure";
 const String NO_NETWORK_FAILURE_MESSAGE = "Sie haben keine Internetverbingung.";
 

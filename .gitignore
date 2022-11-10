@@ -10,6 +10,7 @@
 .buildlog/
 .history
 .svn/
+*.lock
 
 # IntelliJ related
 *.iml
@@ -38,4 +39,7 @@ lib/generated_plugin_registrant.dart
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 /android/key.properties
+
+backend/app/static
+*.env*
 

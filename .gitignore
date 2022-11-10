@@ -43,3 +43,6 @@ lib/generated_plugin_registrant.dart
 backend/app/static
 *.env*
 
+app-react-native/android
+app-react-native/ios
+
